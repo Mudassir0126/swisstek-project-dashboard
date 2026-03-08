@@ -1,0 +1,11 @@
+.dashboard-card{
+cursor:pointer;
+transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+border-radius:8px;
+}
+
+.dashboard-card:hover{
+transform: translateY(-6px);
+box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+background-color:#f8f9fa;
+}
