@@ -1,148 +1,81 @@
-import {useState} from "react"
-import Navbar from "./Navbar.jsx"
-import Dashboard from "./Dashboard.jsx"
-import Reports from "./Reports.jsx"
-import Projects from "./Projects.jsx"
+import { useState, useEffect } from "react"
+import { Routes, Route } from "react-router-dom"
 
-function App(){
+import Navbar from "./components/Navbar"
+import Dashboard from "./components/Dashboard"
+import Projects from "./components/Projects"
+import Reports from "./components/Reports"
 
-const [page,setPage] = useState("dashboard")
+import { getProjects } from "./api/projectApi"
 
-const [projects,setProjects] = useState([
+/*
+Main root component of the application
+Handles global state like project list
+*/
+function App() {
 
-{
-id:1,
-name:"ABC Apartment",
-salesman:"Manjunath",
-start:"2026-02-10",
-stage:"Fabrication",
-deadline:"2026-03-25",
-remark:"",
-status:"Ongoing"
-},
+    /*
+    State to store projects fetched from API
+    */
+    const [projects, setProjects] = useState([])
 
-{
-id:2,
-name:"Green Valley Villas",
-salesman:"Ashish",
-start:"2026-02-18",
-stage:"Glass Order",
-deadline:"2026-03-22",
-remark:"",
-status:"Ongoing"
-},
+    /*
+    Function that loads projects from backend
+    */
+    const loadProjects = async () => {
 
-{
-id:3,
-name:"Metro Business Tower",
-salesman:"Vijay",
-start:"2026-02-05",
-stage:"Installation",
-deadline:"2026-03-28",
-remark:"",
-status:"Ongoing"
-},
+        const data = await getProjects()
 
-{
-id:4,
-name:"Sunrise Residency",
-salesman:"Manjunath",
-start:"2026-02-22",
-stage:"Calculation",
-deadline:"2026-03-26",
-remark:"",
-status:"Ongoing"
-},
+        setProjects(data)
 
-{
-id:5,
-name:"City Mall Complex",
-salesman:"Ashish",
-start:"2026-02-12",
-stage:"Handover",
-deadline:"2026-03-01",
-remark:"",
-status:"Completed"
-},
+    }
 
-{
-id:6,
-name:"Lakeview Apartments",
-salesman:"Vijay",
-start:"2026-02-28",
-stage:"Handover",
-deadline:"2026-03-02",
-remark:"",
-status:"Completed"
-},
+    /*
+    Runs once when the app loads
+    Fetches project data
+    */
+    useEffect(() => {
 
-{
-id:7,
-name:"Silver Heights",
-salesman:"Manjunath",
-start:"2026-02-15",
-stage:"Handover",
-deadline:"2026-03-03",
-remark:"",
-status:"Completed"
-},
+        loadProjects()
 
-{
-id:8,
-name:"Orchid Residency",
-salesman:"Ashish",
-start:"2026-03-01",
-stage:"Site Survey",
-deadline:"2026-03-10",
-remark:"Survey delay",
-status:"Delayed"
-},
+    }, [])
 
-{
-id:9,
-name:"Skyline Towers",
-salesman:"Vijay",
-start:"2026-02-08",
-stage:"Installation",
-deadline:"2026-03-11",
-remark:"Material shortage",
-status:"Delayed"
-},
+    return (
 
-{
-id:10,
-name:"Palm Grove Villas",
-salesman:"Manjunath",
-start:"2026-03-03",
-stage:"Glass Order",
-deadline:"2026-03-12",
-remark:"Glass supplier delay",
-status:"Delayed"
-}
+        <div>
 
-])
+            {/* Top navigation bar */}
+            <Navbar />
 
-return(
+            {/* Route system for page navigation */}
 
-<div>
+            <Routes>
 
-<Navbar setPage={setPage}/>
+                <Route
+                    path="/"
+                    element={<Dashboard projects={projects} />}
+                />
 
-{page==="dashboard" &&
-<Dashboard projects={projects}/>
-}
+                <Route
+                    path="/projects"
+                    element={
+                        <Projects
+                            projects={projects}
+                            reloadProjects={loadProjects}
+                        />
+                    }
+                />
 
-{page==="projects" &&
-<Projects projects={projects} setProjects={setProjects}/>
-}
+                <Route
+                    path="/reports"
+                    element={<Reports projects={projects} />}
+                />
 
-{page==="reports" &&
-<Reports projects={projects}/>
-}
+            </Routes>
 
-</div>
+        </div>
 
-)
+    )
 
 }
 

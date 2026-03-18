@@ -1,0 +1,131 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "ABC Apartment",
+      "salesman": "Manjunath",
+      "start": "2026-02-10",
+      "deadline": "2026-03-25",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": ["Sales Order"]
+    },
+    {
+      "id": 2,
+      "name": "Green Valley Villas",
+      "salesman": "Ashish",
+      "start": "2026-02-18",
+      "deadline": "2026-03-22",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": ["Sales Order", "Site Survey"]
+    },
+    {
+      "id": 3,
+      "name": "Metro Business Tower",
+      "salesman": "Vijay",
+      "start": "2026-02-05",
+      "deadline": "2026-03-28",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": ["Sales Order"]
+    },
+    {
+      "id": 4,
+      "name": "Sunrise Residency",
+      "salesman": "Manjunath",
+      "start": "2026-02-22",
+      "deadline": "2026-03-26",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": ["Sales Order", "Site Survey", "Calculation"]
+    },
+    {
+      "id": 5,
+      "name": "City Mall Complex",
+      "salesman": "Ashish",
+      "start": "2026-02-12",
+      "deadline": "2026-03-01",
+      "remark": "",
+      "status": "Completed",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation",
+        "Glass Order",
+        "Powder Coating",
+        "Fabrication",
+        "Installation",
+        "Handover"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Lakeview Apartments",
+      "salesman": "Vijay",
+      "start": "2026-02-28",
+      "deadline": "2026-03-02",
+      "remark": "",
+      "status": "Completed",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation",
+        "Glass Order",
+        "Powder Coating",
+        "Fabrication",
+        "Installation",
+        "Handover"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Silver Heights",
+      "salesman": "Manjunath",
+      "start": "2026-02-15",
+      "deadline": "2026-03-03",
+      "remark": "",
+      "status": "Completed",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation",
+        "Glass Order",
+        "Powder Coating",
+        "Fabrication",
+        "Installation",
+        "Handover"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Orchid Residency",
+      "salesman": "Ashish",
+      "start": "2026-03-01",
+      "deadline": "2026-03-10",
+      "remark": "Survey delay",
+      "status": "Delayed",
+      "stagesCompleted": ["Sales Order"]
+    },
+    {
+      "id": 9,
+      "name": "Skyline Towers",
+      "salesman": "Vijay",
+      "start": "2026-02-08",
+      "deadline": "2026-03-11",
+      "remark": "Material shortage",
+      "status": "Delayed",
+      "stagesCompleted": ["Sales Order", "Site Survey"]
+    },
+    {
+      "id": 10,
+      "name": "Palm Grove Villas",
+      "salesman": "Manjunath",
+      "start": "2026-03-03",
+      "deadline": "2026-03-12",
+      "remark": "Glass supplier delay",
+      "status": "Delayed",
+      "stagesCompleted": ["Sales Order", "Site Survey", "Calculation"]
+    }
+  ]
+}
