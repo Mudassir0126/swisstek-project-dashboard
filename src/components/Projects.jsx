@@ -1,20 +1,10 @@
-import { useState } from "react"
-
-/*
-Import API functions used to create and update projects
-*/
+import React, { useState } from "react"
 import { createProject, updateProject } from "../api/projectApi"
 
 function Projects({ projects = [], reloadProjects }) {
 
-    /*
-    State to track which table row is expanded
-    */
     const [openRow, setOpenRow] = useState(null)
 
-    /*
-    State for new project form
-    */
     const [form, setForm] = useState({
         name: "",
         salesman: "",
@@ -23,9 +13,6 @@ function Projects({ projects = [], reloadProjects }) {
         remark: ""
     })
 
-    /*
-    All workflow stages of a project
-    */
     const stages = [
         { name: "Sales Order", days: 1 },
         { name: "Site Survey", days: 2 },
@@ -37,26 +24,55 @@ function Projects({ projects = [], reloadProjects }) {
         { name: "Handover", days: 1 }
     ]
 
-    /*
-    Handles input field changes
-    */
     const handleChange = (e) => {
-
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-
+        setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    /*
-    Creates a new project
-    Calculates deadline based on days required
-    */
+    const getStatus = (project) => {
+        const completed = project.stagesCompleted || []
+
+        if (completed.length === stages.length) return "Completed"
+
+        const today = new Date().toISOString().split("T")[0]
+
+        if (project.deadline < today) return "Delayed"
+
+        return "Ongoing"
+    }
+
+    const getEscalation = (project) => {
+
+        const completed = project.stagesCompleted || []
+        const currentStageIndex = completed.length
+        const currentStage = stages[currentStageIndex]
+
+        if (!currentStage) return null
+
+        const today = new Date()
+        const start = new Date(project.start)
+
+        const daysPassed = Math.floor((today - start) / (1000 * 60 * 60 * 24))
+
+        let expectedDays = 0
+        for (let i = 0; i <= currentStageIndex; i++) {
+            expectedDays += stages[i].days
+        }
+
+        if (daysPassed > expectedDays) {
+            return `Delay in ${currentStage.name}`
+        }
+
+        return null
+    }
+
     const addProject = async () => {
 
-        const startDate = new Date(form.start)
+        if (!form.name || !form.start || !form.days) {
+            alert("Fill all fields")
+            return
+        }
 
+        const startDate = new Date(form.start)
         const deadline = new Date(startDate)
 
         deadline.setDate(deadline.getDate() + Number(form.days))
@@ -67,102 +83,69 @@ function Projects({ projects = [], reloadProjects }) {
             start: form.start,
             deadline: deadline.toISOString().split("T")[0],
             remark: form.remark,
-            status: "Ongoing",
             stagesCompleted: []
         }
 
         await createProject(newProject)
-
-        /*
-        Reload projects from API after creation
-        */
         reloadProjects()
-
     }
 
-    /*
-    Toggle completion of a stage
-    */
     const toggleStage = async (project, stage) => {
 
         const completed = project.stagesCompleted || []
 
-        let updatedStages
+        const updatedStages = completed.includes(stage)
+            ? completed.filter(s => s !== stage)
+            : [...completed, stage]
 
-        if (completed.includes(stage)) {
-
-            updatedStages = completed.filter(s => s !== stage)
-
-        } else {
-
-            updatedStages = [...completed, stage]
-
+        const updatedProject = {
+            ...project,
+            stagesCompleted: updatedStages,
+            status: getStatus({ ...project, stagesCompleted: updatedStages }),
+            remark:
+                getStatus({ ...project, stagesCompleted: updatedStages }) === "Delayed"
+                    ? "Auto delayed"
+                    : project.remark
         }
 
-        /*
-        Update project in API
-        */
-        await updateProject(project.id, {
-            ...project,
-            stagesCompleted: updatedStages
-        })
-
+        await updateProject(project.id, updatedProject)
         reloadProjects()
-
     }
 
-    /*
-    Determines the next stage that is not completed
-    */
     const getNextStage = (project) => {
-
         const completed = project.stagesCompleted || []
 
         for (let s of stages) {
-
-            if (!completed.includes(s.name)) {
-                return s.name
-            }
-
+            if (!completed.includes(s.name)) return s.name
         }
 
         return "Completed"
-
     }
 
-    return (
+    const sortedProjects = [...projects].sort(
+        (a, b) => new Date(a.deadline) - new Date(b.deadline)
+    )
 
+    return (
         <div className="container-fluid px-4 mt-4">
 
             <h2 className="mb-4">Project Management</h2>
 
-            {/* -------- ADD PROJECT FORM -------- */}
-
             <div className="card mb-4">
-
                 <div className="card-body">
 
-                    <h5 className="mb-3">Add New Project</h5>
+                    <h5>Add Project</h5>
 
                     <div className="row g-2">
 
                         <div className="col-md-3">
-                            <input
-                                className="form-control"
-                                placeholder="Project Name"
-                                name="name"
-                                value={form.name}
-                                onChange={handleChange}
-                            />
+                            <input className="form-control" placeholder="Project Name"
+                                name="name" onChange={handleChange} />
                         </div>
 
                         <div className="col-md-2">
-                            <select
-                                className="form-control"
-                                name="salesman"
-                                value={form.salesman}
-                                onChange={handleChange}
-                            >
+                            <select className="form-control"
+                                name="salesman" onChange={handleChange}>
                                 <option value="">Salesman</option>
                                 <option>Manjunath</option>
                                 <option>Ashish</option>
@@ -171,126 +154,111 @@ function Projects({ projects = [], reloadProjects }) {
                         </div>
 
                         <div className="col-md-2">
-                            <input
-                                type="date"
-                                className="form-control"
-                                name="start"
-                                value={form.start}
-                                onChange={handleChange}
-                            />
+                            <input type="date" className="form-control"
+                                name="start" onChange={handleChange} />
                         </div>
 
                         <div className="col-md-2">
-                            <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Days Required"
-                                name="days"
-                                value={form.days}
-                                onChange={handleChange}
-                            />
+                            <input type="number" className="form-control"
+                                placeholder="Days" name="days"
+                                onChange={handleChange} />
                         </div>
 
                         <div className="col-md-3">
-                            <button
-                                className="btn btn-primary w-100"
-                                onClick={addProject}
-                            >
+                            <button className="btn btn-primary w-100"
+                                onClick={addProject}>
                                 Add Project
                             </button>
                         </div>
 
                     </div>
-
                 </div>
-
             </div>
 
-            {/* -------- PROJECT TABLE -------- */}
-
             <div className="card">
-
                 <div className="card-body">
 
                     <table className="table table-bordered table-hover">
 
                         <thead>
-
                             <tr>
                                 <th>Project</th>
-                                <th>Salesman</th>
-                                <th>Start</th>
                                 <th>Deadline</th>
-                                <th>Current Stage</th>
-                                <th>Remark</th>
+                                <th>Stage</th>
+                                <th>Status</th>
+                                <th>Escalation</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
 
-                            {projects.map(p => (
+                            {sortedProjects.map(p => (
 
-                                <>
-
-                                    {/* MAIN ROW */}
+                                <React.Fragment key={p.id}>
 
                                     <tr
-                                        key={p.id}
-                                        style={{ cursor: "pointer" }}
+                                        className={getStatus(p) === "Delayed" ? "table-danger" : ""}
                                         onClick={() => setOpenRow(openRow === p.id ? null : p.id)}
+                                        style={{ cursor: "pointer" }}
                                     >
 
                                         <td>{p.name}</td>
-                                        <td>{p.salesman}</td>
-                                        <td>{p.start}</td>
                                         <td>{p.deadline}</td>
                                         <td><b>{getNextStage(p)}</b></td>
-                                        <td>{p.remark}</td>
+
+                                        <td>
+                                            <span className={
+                                                getStatus(p) === "Delayed"
+                                                    ? "badge bg-danger"
+                                                    : getStatus(p) === "Completed"
+                                                        ? "badge bg-success"
+                                                        : "badge bg-warning text-dark"
+                                            }>
+                                                {getStatus(p)}
+                                            </span>
+                                        </td>
+
+                                        <td className="text-danger fw-bold">
+                                            {getEscalation(p) || "-"}
+                                        </td>
 
                                     </tr>
 
-                                    {/* EXPANDED ROW WITH STAGES */}
-
                                     {openRow === p.id && (
-
                                         <tr>
+                                            <td colSpan="5">
 
-                                            <td colSpan="6">
+                                                <div className="d-flex flex-wrap gap-3 p-3">
 
-                                                <div className="p-3">
+                                                    {stages.map(stage => {
 
-                                                    <h6>Project Stages</h6>
+                                                        const completed =
+                                                            (p.stagesCompleted || []).includes(stage.name)
 
-                                                    {stages.map(stage => (
+                                                        return (
+                                                            <div key={stage.name}
+                                                                className={`border p-2 text-center ${completed ? "bg-success text-white" : ""}`}
+                                                            >
 
-                                                        <div key={stage}>
-
-                                                            <label>
-
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={(p.stagesCompleted || []).includes(stage)}
-                                                                    onChange={() => toggleStage(p, stage)}
+                                                                <input type="checkbox"
+                                                                    checked={completed}
+                                                                    onChange={() => toggleStage(p, stage.name)}
                                                                 />
 
-                                                                {" "} {stage}
+                                                                <div>{stage.name}</div>
+                                                                <small>{stage.days} days</small>
 
-                                                            </label>
-
-                                                        </div>
-
-                                                    ))}
+                                                            </div>
+                                                        )
+                                                    })}
 
                                                 </div>
 
                                             </td>
-
                                         </tr>
-
                                     )}
 
-                                </>
+                                </React.Fragment>
 
                             ))}
 
@@ -299,13 +267,10 @@ function Projects({ projects = [], reloadProjects }) {
                     </table>
 
                 </div>
-
             </div>
 
         </div>
-
     )
-
 }
 
 export default Projects

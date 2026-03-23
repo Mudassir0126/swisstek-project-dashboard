@@ -1,58 +1,18 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": "1",
       "name": "ABC Apartment",
       "salesman": "Manjunath",
       "start": "2026-02-10",
       "deadline": "2026-03-25",
       "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": ["Sales Order"]
-    },
-    {
-      "id": 2,
-      "name": "Green Valley Villas",
-      "salesman": "Ashish",
-      "start": "2026-02-18",
-      "deadline": "2026-03-22",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": ["Sales Order", "Site Survey"]
-    },
-    {
-      "id": 3,
-      "name": "Metro Business Tower",
-      "salesman": "Vijay",
-      "start": "2026-02-05",
-      "deadline": "2026-03-28",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": ["Sales Order"]
-    },
-    {
-      "id": 4,
-      "name": "Sunrise Residency",
-      "salesman": "Manjunath",
-      "start": "2026-02-22",
-      "deadline": "2026-03-26",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": ["Sales Order", "Site Survey", "Calculation"]
-    },
-    {
-      "id": 5,
-      "name": "City Mall Complex",
-      "salesman": "Ashish",
-      "start": "2026-02-12",
-      "deadline": "2026-03-01",
-      "remark": "",
       "status": "Completed",
       "stagesCompleted": [
         "Sales Order",
         "Site Survey",
-        "Calculation",
         "Glass Order",
+        "Calculation",
         "Powder Coating",
         "Fabrication",
         "Installation",
@@ -60,7 +20,62 @@
       ]
     },
     {
-      "id": 6,
+      "id": "2",
+      "name": "Green Valley Villas",
+      "salesman": "Ashish",
+      "start": "2026-02-18",
+      "deadline": "2026-03-22",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Metro Business Tower",
+      "salesman": "Vijay",
+      "start": "2026-02-05",
+      "deadline": "2026-03-28",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": [
+        "Sales Order"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Sunrise Residency",
+      "salesman": "Manjunath",
+      "start": "2026-02-22",
+      "deadline": "2026-03-26",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "City Mall Complex",
+      "salesman": "Ashish",
+      "start": "2026-02-12",
+      "deadline": "2026-03-01",
+      "remark": "Auto delayed",
+      "status": "Delayed",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation",
+        "Glass Order",
+        "Powder Coating"
+      ]
+    },
+    {
+      "id": "6",
       "name": "Lakeview Apartments",
       "salesman": "Vijay",
       "start": "2026-02-28",
@@ -79,7 +94,7 @@
       ]
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Silver Heights",
       "salesman": "Manjunath",
       "start": "2026-02-15",
@@ -98,34 +113,108 @@
       ]
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Orchid Residency",
       "salesman": "Ashish",
       "start": "2026-03-01",
       "deadline": "2026-03-10",
       "remark": "Survey delay",
       "status": "Delayed",
-      "stagesCompleted": ["Sales Order"]
+      "stagesCompleted": [
+        "Sales Order"
+      ]
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Skyline Towers",
       "salesman": "Vijay",
       "start": "2026-02-08",
       "deadline": "2026-03-11",
       "remark": "Material shortage",
       "status": "Delayed",
-      "stagesCompleted": ["Sales Order", "Site Survey"]
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey"
+      ]
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Palm Grove Villas",
       "salesman": "Manjunath",
       "start": "2026-03-03",
       "deadline": "2026-03-12",
       "remark": "Glass supplier delay",
       "status": "Delayed",
-      "stagesCompleted": ["Sales Order", "Site Survey", "Calculation"]
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation"
+      ]
+    },
+    {
+      "id": "983e",
+      "name": "XYZ COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-19",
+      "deadline": "2026-05-03",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": []
+    },
+    {
+      "id": "7645",
+      "name": "XYZ COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-19",
+      "deadline": "2026-05-03",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": []
+    },
+    {
+      "id": "7e84",
+      "name": "XYZ COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-19",
+      "deadline": "2026-05-03",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": []
+    },
+    {
+      "id": "2383",
+      "name": "XYZ COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-19",
+      "deadline": "2026-05-03",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": []
+    },
+    {
+      "id": "ffa6",
+      "name": "XYZ COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-19",
+      "deadline": "2026-05-03",
+      "remark": "",
+      "status": "Ongoing",
+      "stagesCompleted": []
+    },
+    {
+      "id": "161f",
+      "name": "NANI House",
+      "salesman": "Manjunath",
+      "start": "2026-03-20",
+      "deadline": "2026-05-04",
+      "remark": "",
+      "stagesCompleted": [
+        "Sales Order",
+        "Site Survey",
+        "Calculation"
+      ],
+      "status": "Ongoing"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
