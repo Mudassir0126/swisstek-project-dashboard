@@ -6,6 +6,7 @@ Import Bootswatch Lux theme (Bootstrap + Lux styling)
 This makes all Bootstrap classes work across the app
 */
 import "bootswatch/dist/lux/bootstrap.min.css"
+import "./index.css"
 
 /*
 HashRouter is used instead of BrowserRouter so the

@@ -1,13 +1,31 @@
-.dashboard-card{
-cursor:pointer;
-transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-border-radius:8px;
+.dashboard-card {
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-radius: 10px;
 }
 
-.dashboard-card:hover{
-transform: translateY(-6px);
-box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-background-color:#f8f9fa;
+/* Hover effect */
+.dashboard-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Active selected card */
+.active-card {
+    border: 2px solid #fff;
+    box-shadow: 0 0 15px rgba(255,255,255);
+}
+
+/* 🔥 FIXED delayed card */
+.delayed-card {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* ensure full hover coverage */
+.delayed-card:hover {
+    background-color: #bb2d3b;
+    color: white;
 }
 
 .project-row {
