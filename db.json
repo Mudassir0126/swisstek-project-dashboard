@@ -9,14 +9,38 @@
       "remark": "",
       "status": "Completed",
       "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Glass Order",
-        "Calculation",
-        "Powder Coating",
-        "Fabrication",
-        "Installation",
-        "Handover"
+        {
+          "name": "Sales Order",
+          "completedAt": "2026-02-10"
+        },
+        {
+          "name": "Site Survey",
+          "completedAt": "2026-02-11"
+        },
+        {
+          "name": "Calculation",
+          "completedAt": "2026-02-13"
+        },
+        {
+          "name": "Glass Order",
+          "completedAt": "2026-02-15"
+        },
+        {
+          "name": "Powder Coating",
+          "completedAt": "2026-02-18"
+        },
+        {
+          "name": "Fabrication",
+          "completedAt": "2026-02-22"
+        },
+        {
+          "name": "Installation",
+          "completedAt": "2026-02-26"
+        },
+        {
+          "name": "Handover",
+          "completedAt": "2026-03-01"
+        }
       ]
     },
     {
@@ -26,129 +50,20 @@
       "start": "2026-02-18",
       "deadline": "2026-03-22",
       "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey"
-      ]
-    },
-    {
-      "id": "3",
-      "name": "Metro Business Tower",
-      "salesman": "Vijay",
-      "start": "2026-02-05",
-      "deadline": "2026-03-28",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": [
-        "Sales Order"
-      ]
-    },
-    {
-      "id": "4",
-      "name": "Sunrise Residency",
-      "salesman": "Manjunath",
-      "start": "2026-02-22",
-      "deadline": "2026-03-26",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation"
-      ]
-    },
-    {
-      "id": "5",
-      "name": "City Mall Complex",
-      "salesman": "Ashish",
-      "start": "2026-02-12",
-      "deadline": "2026-03-01",
-      "remark": "Auto delayed",
       "status": "Delayed",
       "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation",
-        "Glass Order",
-        "Powder Coating"
-      ]
-    },
-    {
-      "id": "6",
-      "name": "Lakeview Apartments",
-      "salesman": "Vijay",
-      "start": "2026-02-28",
-      "deadline": "2026-03-02",
-      "remark": "",
-      "status": "Completed",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation",
-        "Glass Order",
-        "Powder Coating",
-        "Fabrication",
-        "Installation",
-        "Handover"
-      ]
-    },
-    {
-      "id": "7",
-      "name": "Silver Heights",
-      "salesman": "Manjunath",
-      "start": "2026-02-15",
-      "deadline": "2026-03-03",
-      "remark": "",
-      "status": "Completed",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation",
-        "Glass Order",
-        "Powder Coating",
-        "Fabrication",
-        "Installation",
-        "Handover"
-      ]
-    },
-    {
-      "id": "8",
-      "name": "Orchid Residency",
-      "salesman": "Ashish",
-      "start": "2026-03-01",
-      "deadline": "2026-03-10",
-      "remark": "Survey delay",
-      "status": "Delayed",
-      "stagesCompleted": [
-        "Sales Order"
-      ]
-    },
-    {
-      "id": "9",
-      "name": "Skyline Towers",
-      "salesman": "Vijay",
-      "start": "2026-02-08",
-      "deadline": "2026-03-11",
-      "remark": "Material shortage",
-      "status": "Delayed",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey"
-      ]
-    },
-    {
-      "id": "10",
-      "name": "Palm Grove Villas",
-      "salesman": "Manjunath",
-      "start": "2026-03-03",
-      "deadline": "2026-03-12",
-      "remark": "Glass supplier delay",
-      "status": "Delayed",
-      "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation"
+        {
+          "name": "Sales Order",
+          "completedAt": "2026-02-18"
+        },
+        {
+          "name": "Site Survey",
+          "completedAt": "2026-02-20"
+        },
+        {
+          "name": "Calculation",
+          "completedAt": "2026-03-24"
+        }
       ]
     },
     {
@@ -159,59 +74,29 @@
       "deadline": "2026-05-03",
       "remark": "",
       "status": "Ongoing",
-      "stagesCompleted": []
+      "stagesCompleted": [
+        {
+          "name": "Sales Order",
+          "completedAt": "2026-03-24"
+        }
+      ]
     },
     {
-      "id": "7645",
-      "name": "XYZ COLONY",
+      "id": "e8b2",
+      "name": "ABC COLONY",
       "salesman": "Manjunath",
-      "start": "2026-03-19",
-      "deadline": "2026-05-03",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": []
-    },
-    {
-      "id": "7e84",
-      "name": "XYZ COLONY",
-      "salesman": "Manjunath",
-      "start": "2026-03-19",
-      "deadline": "2026-05-03",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": []
-    },
-    {
-      "id": "2383",
-      "name": "XYZ COLONY",
-      "salesman": "Manjunath",
-      "start": "2026-03-19",
-      "deadline": "2026-05-03",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": []
-    },
-    {
-      "id": "ffa6",
-      "name": "XYZ COLONY",
-      "salesman": "Manjunath",
-      "start": "2026-03-19",
-      "deadline": "2026-05-03",
-      "remark": "",
-      "status": "Ongoing",
-      "stagesCompleted": []
-    },
-    {
-      "id": "161f",
-      "name": "NANI House",
-      "salesman": "Manjunath",
-      "start": "2026-03-20",
-      "deadline": "2026-05-04",
+      "start": "2026-02-28",
+      "deadline": "2026-04-14",
       "remark": "",
       "stagesCompleted": [
-        "Sales Order",
-        "Site Survey",
-        "Calculation"
+        {
+          "name": "Sales Order",
+          "completedAt": "2026-03-24"
+        },
+        {
+          "name": "Site Survey",
+          "completedAt": "2026-03-24"
+        }
       ],
       "status": "Ongoing"
     }

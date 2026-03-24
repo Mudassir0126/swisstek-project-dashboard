@@ -9,3 +9,13 @@ transform: translateY(-6px);
 box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 background-color:#f8f9fa;
 }
+
+.project-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.project-row:hover {
+    background-color: #f5f7fa !important;
+    transform: scale(1.002);
+}

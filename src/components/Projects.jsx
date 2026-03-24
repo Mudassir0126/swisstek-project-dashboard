@@ -90,22 +90,35 @@ function Projects({ projects = [], reloadProjects }) {
         reloadProjects()
     }
 
-    const toggleStage = async (project, stage) => {
+    // 🔥 UPDATED TOGGLE (NO UNDO + TIMESTAMP)
+    const toggleStage = async (project, stageName) => {
 
         const completed = project.stagesCompleted || []
 
-        const updatedStages = completed.includes(stage)
-            ? completed.filter(s => s !== stage)
-            : [...completed, stage]
+        const alreadyDone = completed.find(s => s.name === stageName)
+
+        if (alreadyDone) {
+            alert("❌ This stage is already completed and cannot be modified.")
+            return
+        }
+
+        const confirmAction = window.confirm(
+            `Mark "${stageName}" as completed?\n\nThis action cannot be undone.`
+        )
+
+        if (!confirmAction) return
+
+        const today = new Date().toISOString().split("T")[0]
+
+        const updatedStages = [
+            ...completed,
+            { name: stageName, completedAt: today }
+        ]
 
         const updatedProject = {
             ...project,
             stagesCompleted: updatedStages,
-            status: getStatus({ ...project, stagesCompleted: updatedStages }),
-            remark:
-                getStatus({ ...project, stagesCompleted: updatedStages }) === "Delayed"
-                    ? "Auto delayed"
-                    : project.remark
+            status: getStatus({ ...project, stagesCompleted: updatedStages })
         }
 
         await updateProject(project.id, updatedProject)
@@ -116,7 +129,7 @@ function Projects({ projects = [], reloadProjects }) {
         const completed = project.stagesCompleted || []
 
         for (let s of stages) {
-            if (!completed.includes(s.name)) return s.name
+            if (!completed.find(c => c.name === s.name)) return s.name
         }
 
         return "Completed"
@@ -197,13 +210,23 @@ function Projects({ projects = [], reloadProjects }) {
                                 <React.Fragment key={p.id}>
 
                                     <tr
-                                        className={getStatus(p) === "Delayed" ? "table-danger" : ""}
+                                        className={`${getStatus(p) === "Delayed" ? "table-danger" : ""} project-row`}
                                         onClick={() => setOpenRow(openRow === p.id ? null : p.id)}
-                                        style={{ cursor: "pointer" }}
                                     >
 
-                                        <td>{p.name}</td>
+                                        <td className="fw-semibold d-flex align-items-center gap-2" title="Click to expand">
+                                            <span style={{
+                                                display: "inline-block",
+                                                transition: "transform 0.2s",
+                                                transform: openRow === p.id ? "rotate(90deg)" : "rotate(0deg)"
+                                            }}>
+                                                ▶
+                                            </span>
+                                            {p.name}
+                                        </td>
+
                                         <td>{p.deadline}</td>
+
                                         <td><b>{getNextStage(p)}</b></td>
 
                                         <td>
@@ -224,29 +247,53 @@ function Projects({ projects = [], reloadProjects }) {
 
                                     </tr>
 
-                                    {openRow === p.id && (
-                                        <tr>
-                                            <td colSpan="5">
+                                    <tr>
+                                        <td colSpan="5" style={{ padding: 0 }}>
+
+                                            <div style={{
+                                                maxHeight: openRow === p.id ? "500px" : "0px",
+                                                overflow: "hidden",
+                                                transition: "all 0.3s ease",
+                                                opacity: openRow === p.id ? 1 : 0
+                                            }}>
 
                                                 <div className="d-flex flex-wrap gap-3 p-3">
 
                                                     {stages.map(stage => {
 
-                                                        const completed =
-                                                            (p.stagesCompleted || []).includes(stage.name)
+                                                        const completedObj =
+                                                            (p.stagesCompleted || []).find(s => s.name === stage.name)
+
+                                                        const completed = !!completedObj
 
                                                         return (
                                                             <div key={stage.name}
-                                                                className={`border p-2 text-center ${completed ? "bg-success text-white" : ""}`}
+                                                                className={`border rounded p-2 text-center ${
+                                                                    completed ? "bg-success text-white" : "bg-light"
+                                                                }`}
+                                                                style={{ minWidth: "140px" }}
                                                             >
 
-                                                                <input type="checkbox"
+                                                                <input
+                                                                    type="checkbox"
                                                                     checked={completed}
+                                                                    disabled={completed}
                                                                     onChange={() => toggleStage(p, stage.name)}
                                                                 />
 
-                                                                <div>{stage.name}</div>
-                                                                <small>{stage.days} days</small>
+                                                                <div className="fw-bold">
+                                                                    {stage.name}
+                                                                </div>
+
+                                                                <div style={{ fontSize: "12px" }}>
+                                                                    {stage.days} days
+                                                                </div>
+
+                                                                {completed && (
+                                                                    <div style={{ fontSize: "11px", marginTop: "5px" }}>
+                                                                        ✔ Done on: {completedObj.completedAt}
+                                                                    </div>
+                                                                )}
 
                                                             </div>
                                                         )
@@ -254,9 +301,10 @@ function Projects({ projects = [], reloadProjects }) {
 
                                                 </div>
 
-                                            </td>
-                                        </tr>
-                                    )}
+                                            </div>
+
+                                        </td>
+                                    </tr>
 
                                 </React.Fragment>
 
