@@ -13,6 +13,9 @@ function Projects({ projects = [], reloadProjects }) {
         remark: ""
     })
 
+    // ✅ NEW STATE
+    const [showSuccess, setShowSuccess] = useState(false)
+
     const stages = [
         { name: "Sales Order", days: 1 },
         { name: "Site Survey", days: 2 },
@@ -26,6 +29,17 @@ function Projects({ projects = [], reloadProjects }) {
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    // ✅ RESET FORM FUNCTION
+    const resetForm = () => {
+        setForm({
+            name: "",
+            salesman: "",
+            start: "",
+            days: "",
+            remark: ""
+        })
     }
 
     const getStatus = (project) => {
@@ -87,10 +101,13 @@ function Projects({ projects = [], reloadProjects }) {
         }
 
         await createProject(newProject)
+
         reloadProjects()
+
+        // ✅ SHOW SUCCESS CARD
+        setShowSuccess(true)
     }
 
-    // 🔥 UPDATED TOGGLE (NO UNDO + TIMESTAMP)
     const toggleStage = async (project, stageName) => {
 
         const completed = project.stagesCompleted || []
@@ -144,6 +161,25 @@ function Projects({ projects = [], reloadProjects }) {
 
             <h2 className="mb-4">Project Management</h2>
 
+            {/* ✅ SUCCESS CARD */}
+            {showSuccess && (
+                <div className="card border-success mb-4 text-center">
+                    <div className="card-body">
+                        <h5 className="text-success">✅ Project Added Successfully</h5>
+                        <button
+                            className="btn btn-success mt-3"
+                            onClick={() => {
+                                setShowSuccess(false)
+                                resetForm()
+                            }}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* ADD PROJECT */}
             <div className="card mb-4">
                 <div className="card-body">
 
@@ -152,13 +188,20 @@ function Projects({ projects = [], reloadProjects }) {
                     <div className="row g-2">
 
                         <div className="col-md-3">
-                            <input className="form-control" placeholder="Project Name"
-                                name="name" onChange={handleChange} />
+                            <input className="form-control"
+                                placeholder="Project Name"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="col-md-2">
                             <select className="form-control"
-                                name="salesman" onChange={handleChange}>
+                                name="salesman"
+                                value={form.salesman}
+                                onChange={handleChange}
+                            >
                                 <option value="">Salesman</option>
                                 <option>Manjunath</option>
                                 <option>Ashish</option>
@@ -167,27 +210,39 @@ function Projects({ projects = [], reloadProjects }) {
                         </div>
 
                         <div className="col-md-2">
-                            <input type="date" className="form-control"
-                                name="start" onChange={handleChange} />
+                            <input type="date"
+                                className="form-control"
+                                name="start"
+                                value={form.start}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="col-md-2">
-                            <input type="number" className="form-control"
-                                placeholder="Days" name="days"
-                                onChange={handleChange} />
+                            <input type="number"
+                                className="form-control"
+                                placeholder="Days"
+                                name="days"
+                                value={form.days}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="col-md-3">
-                            <button className="btn btn-primary w-100"
-                                onClick={addProject}>
+                            <button
+                                className="btn btn-primary w-100"
+                                onClick={addProject}
+                            >
                                 Add Project
                             </button>
                         </div>
 
                     </div>
+
                 </div>
             </div>
 
+            {/* TABLE (UNCHANGED) */}
             <div className="card">
                 <div className="card-body">
 
@@ -249,14 +304,12 @@ function Projects({ projects = [], reloadProjects }) {
 
                                     <tr>
                                         <td colSpan="5" style={{ padding: 0 }}>
-
                                             <div style={{
                                                 maxHeight: openRow === p.id ? "500px" : "0px",
                                                 overflow: "hidden",
                                                 transition: "all 0.3s ease",
                                                 opacity: openRow === p.id ? 1 : 0
                                             }}>
-
                                                 <div className="d-flex flex-wrap gap-3 p-3">
 
                                                     {stages.map(stage => {
@@ -300,9 +353,7 @@ function Projects({ projects = [], reloadProjects }) {
                                                     })}
 
                                                 </div>
-
                                             </div>
-
                                         </td>
                                     </tr>
 
