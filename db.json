@@ -117,6 +117,24 @@
       "deadline": "2026-03-23",
       "remark": "",
       "stagesCompleted": []
+    },
+    {
+      "id": "2ed7",
+      "name": "ABC COLONY",
+      "salesman": "Manjunath",
+      "start": "2026-03-02",
+      "deadline": "2026-03-16",
+      "remark": "",
+      "stagesCompleted": []
+    },
+    {
+      "id": "8f29",
+      "name": "company",
+      "salesman": "Manjunath",
+      "start": "2026-03-23",
+      "deadline": "2026-05-07",
+      "remark": "",
+      "stagesCompleted": []
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -33,7 +33,7 @@ function Dashboard({ projects = [] }) {
 
             <div className="row mb-4">
 
-                <div className="col-md-3">
+                <div className="col-md-3 dashboard-card">
                     <div className="card text-center" onClick={() => setFilter("All")}>
                         <div className="card-body">
                             <h6>Total Projects</h6>

@@ -13,11 +13,10 @@ function Projects({ projects = [], reloadProjects }) {
         remark: ""
     })
 
-    // ✅ NEW STATE
     const [showSuccess, setShowSuccess] = useState(false)
 
+    // ❌ Sales Order removed
     const stages = [
-        { name: "Sales Order", days: 1 },
         { name: "Site Survey", days: 2 },
         { name: "Calculation", days: 2 },
         { name: "Glass Order", days: 3 },
@@ -31,7 +30,6 @@ function Projects({ projects = [], reloadProjects }) {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    // ✅ RESET FORM FUNCTION
     const resetForm = () => {
         setForm({
             name: "",
@@ -55,7 +53,6 @@ function Projects({ projects = [], reloadProjects }) {
     }
 
     const getEscalation = (project) => {
-
         const completed = project.stagesCompleted || []
         const currentStageIndex = completed.length
         const currentStage = stages[currentStageIndex]
@@ -101,10 +98,8 @@ function Projects({ projects = [], reloadProjects }) {
         }
 
         await createProject(newProject)
-
         reloadProjects()
 
-        // ✅ SHOW SUCCESS CARD
         setShowSuccess(true)
     }
 
@@ -152,8 +147,9 @@ function Projects({ projects = [], reloadProjects }) {
         return "Completed"
     }
 
+    // ✅ Sort by START DATE (newest first)
     const sortedProjects = [...projects].sort(
-        (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        (a, b) => new Date(b.start) - new Date(a.start)
     )
 
     return (
@@ -161,11 +157,22 @@ function Projects({ projects = [], reloadProjects }) {
 
             <h2 className="mb-4">Project Management</h2>
 
-            {/* ✅ SUCCESS CARD */}
+            {/* 🔥 MODAL POPUP */}
             {showSuccess && (
-                <div className="card border-success mb-4 text-center">
-                    <div className="card-body">
-                        <h5 className="text-success">✅ Project Added Successfully</h5>
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 999
+                }}>
+                    <div className="card p-4 text-center" style={{ width: "300px" }}>
+                        <h5 className="text-success">✅ Project Added</h5>
                         <button
                             className="btn btn-success mt-3"
                             onClick={() => {
@@ -209,12 +216,14 @@ function Projects({ projects = [], reloadProjects }) {
                             </select>
                         </div>
 
-                        <div className="col-md-2">
-                            <input type="date"
+                        <div className="col-md-2" >
+                            <input
+                                type="date"
                                 className="form-control"
                                 name="start"
                                 value={form.start}
                                 onChange={handleChange}
+                                placeholder="Start Date"
                             />
                         </div>
 
@@ -242,7 +251,7 @@ function Projects({ projects = [], reloadProjects }) {
                 </div>
             </div>
 
-            {/* TABLE (UNCHANGED) */}
+            {/* TABLE */}
             <div className="card">
                 <div className="card-body">
 
@@ -251,6 +260,7 @@ function Projects({ projects = [], reloadProjects }) {
                         <thead>
                             <tr>
                                 <th>Project</th>
+                                <th>Start Date</th> {/* ✅ Added */}
                                 <th>Deadline</th>
                                 <th>Stage</th>
                                 <th>Status</th>
@@ -269,7 +279,7 @@ function Projects({ projects = [], reloadProjects }) {
                                         onClick={() => setOpenRow(openRow === p.id ? null : p.id)}
                                     >
 
-                                        <td className="fw-semibold d-flex align-items-center gap-2" title="Click to expand">
+                                        <td className="fw-semibold d-flex align-items-center gap-2">
                                             <span style={{
                                                 display: "inline-block",
                                                 transition: "transform 0.2s",
@@ -280,8 +290,8 @@ function Projects({ projects = [], reloadProjects }) {
                                             {p.name}
                                         </td>
 
+                                        <td>{p.start}</td> {/* ✅ New column */}
                                         <td>{p.deadline}</td>
-
                                         <td><b>{getNextStage(p)}</b></td>
 
                                         <td>
@@ -303,7 +313,7 @@ function Projects({ projects = [], reloadProjects }) {
                                     </tr>
 
                                     <tr>
-                                        <td colSpan="5" style={{ padding: 0 }}>
+                                        <td colSpan="6" style={{ padding: 0 }}>
                                             <div style={{
                                                 maxHeight: openRow === p.id ? "500px" : "0px",
                                                 overflow: "hidden",
