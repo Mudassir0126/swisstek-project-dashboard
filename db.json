@@ -63,6 +63,11 @@
         {
           "name": "Calculation",
           "completedAt": "2026-03-24"
+        },
+        {
+          "name": "Glass Order",
+          "completedAt": "2026-03-12",
+          "remark": "delayed due to glass vendor no gas"
         }
       ]
     },
@@ -107,7 +112,12 @@
       "start": "2026-03-24",
       "deadline": "2026-04-23",
       "remark": "",
-      "stagesCompleted": []
+      "stagesCompleted": [
+        {
+          "name": "Site Survey",
+          "completedAt": "2026-03-29"
+        }
+      ]
     },
     {
       "id": "e8b5",
@@ -141,7 +151,7 @@
       "name": "NANI House",
       "salesman": "Manjunath",
       "start": "2026-04-03",
-      "deadline": "2026-06-02",
+      "deadline": "2026-05-13",
       "remark": "",
       "stagesCompleted": [
         {
@@ -171,9 +181,15 @@
         {
           "name": "Handover",
           "completedAt": "2026-03-24"
+        },
+        {
+          "name": "Site Survey",
+          "completedAt": "2026-03-29"
         }
       ],
-      "status": "Completed"
+      "status": "Completed",
+      "measurementDate": "2026-03-29",
+      "totalDays": 45
     },
     {
       "id": "df8a",
