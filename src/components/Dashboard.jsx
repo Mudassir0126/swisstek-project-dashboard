@@ -4,17 +4,18 @@ function Dashboard({ projects = [] }) {
 
     const [filter, setFilter] = useState("All")
 
-    // same stages as Projects (Sales Order removed)
+    // 📊 Stages list
     const stages = [
-        { name: "Site Survey", days: 2 },
-        { name: "Calculation", days: 2 },
-        { name: "Glass Order", days: 3 },
-        { name: "Powder Coating", days: 2 },
-        { name: "Fabrication", days: 4 },
-        { name: "Installation", days: 3 },
-        { name: "Handover", days: 1 }
+        { name: "Site Survey" },
+        { name: "Calculation" },
+        { name: "Glass Order" },
+        { name: "Powder Coating" },
+        { name: "Fabrication" },
+        { name: "Installation" },
+        { name: "Handover" }
     ]
 
+    // 🔹 STATUS LOGIC
     const getStatus = (project) => {
         const completed = project.stagesCompleted || []
 
@@ -22,12 +23,12 @@ function Dashboard({ projects = [] }) {
 
         const today = new Date().toISOString().split("T")[0]
 
-        if (project.deadline < today) return "Delayed"
+        if (project.deadline && project.deadline < today) return "Delayed"
 
         return "Ongoing"
     }
 
-    // ✅ NEW: CURRENT STAGE LOGIC
+    // 🔹 NEXT STAGE
     const getNextStage = (project) => {
         const completed = project.stagesCompleted || []
 
@@ -40,11 +41,34 @@ function Dashboard({ projects = [] }) {
         return "Completed"
     }
 
+    // 🔥 LATEST REMARK LOGIC
+    const getLatestRemark = (project) => {
+        const stages = project.stagesCompleted || []
+
+        if (stages.length === 0) return "No Remark"
+
+        const latest = stages[stages.length - 1]
+
+        return latest.remark || "No Remark"
+    }
+
+    // 🔥 DEADLINE LOGIC
+    const getDeadlineDisplay = (project) => {
+        const surveyDone = (project.stagesCompleted || [])
+            .find(s => s.name === "Site Survey")
+
+        if (!surveyDone) return "Survey Not Yet Done"
+
+        return project.deadline || "-"
+    }
+
+    // 🔽 FILTER
     const filteredProjects = projects.filter(p => {
         if (filter === "All") return true
         return getStatus(p) === filter
     })
 
+    // 📊 COUNTS
     const total = projects.length
     const ongoing = projects.filter(p => getStatus(p) === "Ongoing").length
     const completed = projects.filter(p => getStatus(p) === "Completed").length
@@ -55,7 +79,7 @@ function Dashboard({ projects = [] }) {
 
             <h2 className="mb-4">Project Dashboard</h2>
 
-            {/* 🔥 CARDS */}
+            {/* 🔥 DASHBOARD CARDS */}
             <div className="row mb-4">
 
                 <div className="col-md-3">
@@ -89,7 +113,6 @@ function Dashboard({ projects = [] }) {
                 </div>
 
                 <div className="col-md-3">
-                    {/* ✅ FIXED delayed card */}
                     <div className={`card text-center dashboard-card delayed-card ${filter === "Delayed" ? "active-card" : ""}`}
                         onClick={() => setFilter("Delayed")}>
                         <div className="card-body">
@@ -101,7 +124,7 @@ function Dashboard({ projects = [] }) {
 
             </div>
 
-            {/* TABLE */}
+            {/* 📋 TABLE */}
             <table className="table table-bordered table-hover">
 
                 <thead>
@@ -109,13 +132,14 @@ function Dashboard({ projects = [] }) {
                         <th>Project</th>
                         <th>Salesman</th>
                         <th>Deadline</th>
-                        <th>Stage</th> {/* ✅ NEW COLUMN */}
+                        <th>Stage</th>
                         <th>Status</th>
                         <th>Remark</th>
                     </tr>
                 </thead>
 
                 <tbody>
+
                     {filteredProjects.map(p => (
 
                         <tr key={p.id}
@@ -123,13 +147,16 @@ function Dashboard({ projects = [] }) {
 
                             <td>{p.name}</td>
                             <td>{p.salesman}</td>
-                            <td>{p.deadline}</td>
 
-                            {/* ✅ NEW STAGE COLUMN */}
+                            {/* 🔥 DEADLINE FIX */}
+                            <td>{getDeadlineDisplay(p)}</td>
+
+                            {/* STAGE */}
                             <td>
                                 <b>{getNextStage(p)}</b>
                             </td>
 
+                            {/* STATUS */}
                             <td>
                                 <span className={
                                     getStatus(p) === "Delayed"
@@ -142,11 +169,13 @@ function Dashboard({ projects = [] }) {
                                 </span>
                             </td>
 
-                            <td>{p.remark}</td>
+                            {/* 🔥 LATEST REMARK */}
+                            <td>{getLatestRemark(p)}</td>
 
                         </tr>
 
                     ))}
+
                 </tbody>
 
             </table>
