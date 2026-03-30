@@ -199,6 +199,22 @@
       "deadline": "2026-04-23",
       "remark": "",
       "stagesCompleted": []
+    },
+    {
+      "id": "470d",
+      "name": "Bharat",
+      "salesman": "Vijay",
+      "start": "2026-03-25",
+      "deadline": "",
+      "stagesCompleted": []
+    },
+    {
+      "id": "a57a",
+      "name": "Dinesh",
+      "salesman": "Vijay",
+      "start": "2026-02-20",
+      "deadline": "",
+      "stagesCompleted": []
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -4,33 +4,27 @@ function SuccessModal({ show, onClose }) {
 
     return (
         <div className="modal-backdrop-custom">
+            <div className="card success-modal shadow border-0">
+                <div className="success-modal-header">
+                    <h5 className="text-success mb-0">Project Added</h5>
+                    <button
+                        type="button"
+                        className="success-modal-close"
+                        onClick={onClose}
+                        aria-label="Close success popup"
+                    >
+                        &times;
+                    </button>
+                </div>
 
-            <div className="card p-4 text-center position-relative">
+                <p className="text-muted mb-3">
+                    Your project has been added successfully.
+                </p>
 
-                {/* CLOSE BUTTON */}
-                <button
-                    onClick={onClose}
-                    style={{
-                        position: "absolute",
-                        top: "8px",
-                        right: "10px",
-                        border: "none",
-                        background: "transparent",
-                        fontSize: "18px",
-                        cursor: "pointer"
-                    }}
-                >
-                    ✖
-                </button>
-
-                <h5 className="text-success">Project Added</h5>
-
-                <button className="btn btn-success mt-3" onClick={onClose}>
+                <button className="btn btn-success w-100" onClick={onClose}>
                     OK
                 </button>
-
             </div>
-
         </div>
     )
 }

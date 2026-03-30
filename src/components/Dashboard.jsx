@@ -1,71 +1,75 @@
 import { useState } from "react"
+import {
+    formatDisplayDate,
+    getDeadlineDisplay,
+    getLatestRemark,
+    getNextStage,
+    getStatus
+} from "./Projects/projectUtils"
 
 function Dashboard({ projects = [] }) {
 
     const [filter, setFilter] = useState("All")
+    const [sortConfig, setSortConfig] = useState({
+        key: "deadline",
+        direction: "asc"
+    })
 
     // 📊 Stages list
-    const stages = [
-        { name: "Site Survey" },
-        { name: "Calculation" },
-        { name: "Glass Order" },
-        { name: "Powder Coating" },
-        { name: "Fabrication" },
-        { name: "Installation" },
-        { name: "Handover" }
-    ]
 
     // 🔹 STATUS LOGIC
-    const getStatus = (project) => {
-        const completed = project.stagesCompleted || []
-
-        if (completed.length === stages.length) return "Completed"
-
-        const today = new Date().toISOString().split("T")[0]
-
-        if (project.deadline && project.deadline < today) return "Delayed"
-
-        return "Ongoing"
-    }
-
     // 🔹 NEXT STAGE
-    const getNextStage = (project) => {
-        const completed = project.stagesCompleted || []
-
-        for (let s of stages) {
-            if (!completed.find(c => c.name === s.name)) {
-                return s.name
-            }
-        }
-
-        return "Completed"
-    }
-
     // 🔥 LATEST REMARK LOGIC
-    const getLatestRemark = (project) => {
-        const stages = project.stagesCompleted || []
-
-        if (stages.length === 0) return "No Remark"
-
-        const latest = stages[stages.length - 1]
-
-        return latest.remark || "No Remark"
-    }
-
     // 🔥 DEADLINE LOGIC
-    const getDeadlineDisplay = (project) => {
-        const surveyDone = (project.stagesCompleted || [])
-            .find(s => s.name === "Site Survey")
-
-        if (!surveyDone) return "Survey Not Yet Done"
-
-        return project.deadline || "-"
-    }
-
     // 🔽 FILTER
     const filteredProjects = projects.filter(p => {
         if (filter === "All") return true
         return getStatus(p) === filter
+    })
+
+    const statusOrder = {
+        Delayed: 0,
+        Ongoing: 1,
+        Completed: 2
+    }
+
+    const handleSort = (key) => {
+        setSortConfig((current) => {
+            if (current.key === key) {
+                return {
+                    key,
+                    direction: current.direction === "asc" ? "desc" : "asc"
+                }
+            }
+
+            return {
+                key,
+                direction: key === "start" ? "desc" : "asc"
+            }
+        })
+    }
+
+    const getSortIndicator = (key) => {
+        if (sortConfig.key !== key) return ""
+        return sortConfig.direction === "asc" ? " ▲" : " ▼"
+    }
+
+    const sortedProjects = [...filteredProjects].sort((a, b) => {
+        let result = 0
+
+        if (sortConfig.key === "status") {
+            result = statusOrder[getStatus(a)] - statusOrder[getStatus(b)]
+        } else if (sortConfig.key === "start") {
+            const aStart = a.start || ""
+            const bStart = b.start || ""
+            result = aStart.localeCompare(bStart)
+        } else {
+            const aDeadline = a.deadline || "9999-12-31"
+            const bDeadline = b.deadline || "9999-12-31"
+            result = aDeadline.localeCompare(bDeadline)
+        }
+
+        return sortConfig.direction === "asc" ? result : -result
     })
 
     // 📊 COUNTS
@@ -125,31 +129,49 @@ function Dashboard({ projects = [] }) {
             </div>
 
             {/* 📋 TABLE */}
-            <table className="table table-bordered table-hover">
+            <div className="table-responsive">
+            <table className="table table-bordered table-hover dashboard-table align-middle">
 
                 <thead>
                     <tr>
                         <th>Project</th>
                         <th>Salesman</th>
-                        <th>Deadline</th>
+                        <th
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleSort("start")}
+                        >
+                            Start{getSortIndicator("start")}
+                        </th>
+                        <th
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleSort("deadline")}
+                        >
+                            Deadline{getSortIndicator("deadline")}
+                        </th>
                         <th>Stage</th>
-                        <th>Status</th>
+                        <th
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleSort("status")}
+                        >
+                            Status{getSortIndicator("status")}
+                        </th>
                         <th>Remark</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    {filteredProjects.map(p => (
+                    {sortedProjects.map(p => (
 
                         <tr key={p.id}
                             className={getStatus(p) === "Delayed" ? "table-danger" : ""}>
 
                             <td>{p.name}</td>
                             <td>{p.salesman}</td>
+                            <td>{formatDisplayDate(p.start)}</td>
 
                             {/* 🔥 DEADLINE FIX */}
-                            <td>{getDeadlineDisplay(p)}</td>
+                            <td>{formatDisplayDate(getDeadlineDisplay(p))}</td>
 
                             {/* STAGE */}
                             <td>
@@ -179,6 +201,7 @@ function Dashboard({ projects = [] }) {
                 </tbody>
 
             </table>
+            </div>
 
         </div>
     )

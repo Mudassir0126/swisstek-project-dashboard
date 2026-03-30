@@ -57,3 +57,40 @@
 .stage-card:hover {
     transform: scale(1.05);
 }
+
+.dashboard-table th,
+.dashboard-table td {
+    vertical-align: middle;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    width: 14.285%;
+}
+
+.dashboard-table th {
+    background-color: #f8f9fa;
+    table-layout: fixed;
+}
+
+.dashboard-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.projects-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.projects-table th,
+.projects-table td {
+    vertical-align: middle;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    width: 16.666%;
+}
+
+.projects-table th {
+    background-color: #f8f9fa;
+}

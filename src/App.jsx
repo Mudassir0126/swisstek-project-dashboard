@@ -23,11 +23,8 @@ function App() {
     Function that loads projects from backend
     */
     const loadProjects = async () => {
-
         const data = await getProjects()
-
         setProjects(data)
-
     }
 
     /*
@@ -35,9 +32,17 @@ function App() {
     Fetches project data
     */
     useEffect(() => {
+        let isMounted = true
 
-        loadProjects()
+        getProjects().then((data) => {
+            if (isMounted) {
+                setProjects(data)
+            }
+        })
 
+        return () => {
+            isMounted = false
+        }
     }, [])
 
     return (

@@ -1,4 +1,6 @@
+import { Fragment } from "react"
 import { stages } from "./stages"
+import { formatDisplayDate, getDeadlineDisplay, getLatestRemark } from "./projectUtils"
 
 function ProjectTable({
     projects,
@@ -6,19 +8,37 @@ function ProjectTable({
     setOpenRow,
     handleStageClick,
     getNextStage,
-    getStatus
+    getStatus,
+    handleSort,
+    getSortIndicator
 }) {
 
     return (
-        <table className="table table-bordered table-hover">
+        <div className="table-responsive">
+        <table className="table table-bordered table-hover projects-table align-middle">
 
             <thead>
                 <tr>
                     <th>Project</th>
-                    <th>Start</th>
-                    <th>Deadline</th>
+                    <th
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleSort("start")}
+                    >
+                        Start{getSortIndicator("start")}
+                    </th>
+                    <th
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleSort("deadline")}
+                    >
+                        Deadline{getSortIndicator("deadline")}
+                    </th>
                     <th>Stage</th>
-                    <th>Status</th>
+                    <th
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleSort("status")}
+                    >
+                        Status{getSortIndicator("status")}
+                    </th>
                     <th>Remark</th>
                 </tr>
             </thead>
@@ -27,9 +47,8 @@ function ProjectTable({
 
                 {projects.map(p => (
 
-                    <>
+                    <Fragment key={p.id}>
                         <tr
-                            key={p.id}
                             className="project-row"
                             onClick={() => setOpenRow(openRow === p.id ? null : p.id)}
                         >
@@ -46,17 +65,11 @@ function ProjectTable({
                                 {p.name}
                             </td>
 
-                            <td>{p.start || "-"}</td>
-                            <td>
-                                {
-                                    !(p.stagesCompleted || []).find(s => s.name === "Site Survey")
-                                        ? "Survey Not Yet Done"
-                                        : p.deadline || "-"
-                                }
-                            </td>
+                            <td>{formatDisplayDate(p.start)}</td>
+                            <td>{formatDisplayDate(getDeadlineDisplay(p))}</td>
                             <td><b>{getNextStage(p)}</b></td>
                             <td>{getStatus(p)}</td>
-                            <td>{p.remark || "No Remark"}</td>
+                            <td>{getLatestRemark(p)}</td>
 
                         </tr>
 
@@ -88,7 +101,7 @@ function ProjectTable({
 
                                                     {completed ? (
                                                         <>
-                                                            <div>{completedObj.completedAt}</div>
+                                                            <div>{formatDisplayDate(completedObj.completedAt)}</div>
                                                             <div>{completedObj.remark}</div>
                                                         </>
                                                     ) : (
@@ -104,12 +117,13 @@ function ProjectTable({
                             </tr>
                         )}
 
-                    </>
+                    </Fragment>
                 ))}
 
             </tbody>
 
         </table>
+        </div>
     )
 }
 
