@@ -2,9 +2,9 @@ import { useState, useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 
 import Navbar from "./components/Navbar"
-import Dashboard from "./components/Dashboard"
-import Projects from "./components/Projects/Projects"
-import Reports from "./components/Reports"
+import Dashboard from "./pages/Dashboard"
+import Projects from "./features/projects/Projects"
+import Reports from "./pages/Reports"
 
 import { getProjects } from "./api/projectApi"
 

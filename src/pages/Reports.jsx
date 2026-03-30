@@ -3,7 +3,7 @@ import {
     getDeadlineDisplay,
     getNextStage,
     getStatus
-} from "./Projects/projectUtils"
+} from "../features/projects/projectUtils"
 
 function Reports({ projects = [] }) {
 

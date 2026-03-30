@@ -5,7 +5,7 @@ import {
     getLatestRemark,
     getNextStage,
     getStatus
-} from "./Projects/projectUtils"
+} from "../features/projects/projectUtils"
 
 function Dashboard({ projects = [] }) {
 
